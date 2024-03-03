@@ -4,19 +4,26 @@ import { useState } from "react"
 import Log from "./components/Log";
 
 // App.jsx
+function deriveActivePlayer(gameTurns) {
+  let currentPlayer = 'X';
+  if (gameTurns.length > 0 && gameTurns[0].player === 'X') {
+    currentPlayer = '0';
+  }
+  return currentPlayer;
+}
+
 function App() {
 
-  const [activePlayer, setActivePlayer] = useState('X');
   const [gameTurns, setGameTurns] = useState([]);
 
+  let activePlayer = deriveActivePlayer(gameTurns);
+
   function handlePlayerSwitch(rowIndex, colIndex) {
-    setActivePlayer((currentPlayer) =>
-      currentPlayer === 'X' ? 'O' : 'X'
-    )
 
     setGameTurns((prevTurns) => {
+      const currentPlayer = deriveActivePlayer(prevTurns);
 
-      const updatedTurns = [{ square: { row: rowIndex, col: colIndex }, player: activePlayer }, ...prevTurns];
+      const updatedTurns = [{ square: { row: rowIndex, col: colIndex }, player: currentPlayer }, ...prevTurns];
       return updatedTurns
     })
   }
