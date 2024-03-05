@@ -1,12 +1,14 @@
 import { useState } from 'react'
 
-const Player = ({ name, symbol, isActive }) => {
+const Player = ({ name, symbol, isActive, setName }) => {
     const [isClicked, setIsClicked] = useState(false);
     const [playerName, setPlayerName] = useState(name);
 
     function handleEditClick() {
         setIsClicked((editing) => !editing)
-
+        if (isClicked) {
+            setName(symbol, playerName);
+        }
     }
 
     function handleChange(e) {
